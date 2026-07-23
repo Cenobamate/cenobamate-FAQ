@@ -550,6 +550,14 @@
     padding: 6px 12px;
     line-height: 1.5;
   }
+  .ddi-disclaimer {
+    margin-top: 10px;
+    padding: 6px 12px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    border-top: 1px solid #e5e7eb;
+  }
   .ddi-consensus-agree {
     margin-top: 10px;
     padding: 6px 12px;
@@ -834,7 +842,7 @@ function showDDI() {
       html += '<div class="ref-item">';
       html += '<div class="ref-text">' + escapeHtml(ref.text) + '</div>';
       if (ref.abstract_zh) {
-        html += '<button class="ref-toggle" onclick="toggleDDIRef(\'' + refId + '\')" id="btn-' + refId + '">查看中文摘要 ▼</button>';
+        html += '<button class="ref-toggle" data-ref-id="' + refId + '">查看中文摘要 ▼</button>';
         html += '<div class="ref-abstract" id="' + refId + '" style="display:none;">' + escapeHtml(ref.abstract_zh) + '</div>';
       }
       if (ref.url) {
@@ -868,22 +876,25 @@ function showDDI() {
       html += '<div class="ddi-consensus-agree">📋 两项共识建议一致</div>';
     }
   }
+  html += '<div class="ddi-disclaimer">以上建议来自专家指南/共识原文，具体决策建议请结合患者个体情况。</div>';
   html += '</div>';
   result.innerHTML = html;
   result.style.display = 'block';
-}
-
-function toggleDDIRef(refId) {
-  var el = document.getElementById(refId);
-  var btn = document.getElementById('btn-' + refId);
-  if (!el || !btn) return;
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-    btn.textContent = btn.textContent.replace('▼', '▲').replace('查看中文摘要', '收起摘要');
-  } else {
-    el.style.display = 'none';
-    btn.textContent = btn.textContent.replace('▲', '▼').replace('收起摘要', '查看中文摘要');
-  }
+  // 事件委托：为所有参考文献折叠按钮绑定点击事件
+  result.querySelectorAll('.ref-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var refId = this.getAttribute('data-ref-id');
+      var el = document.getElementById(refId);
+      if (!el) return;
+      if (el.style.display === 'none') {
+        el.style.display = 'block';
+        this.textContent = '收起摘要 ▲';
+      } else {
+        el.style.display = 'none';
+        this.textContent = '查看中文摘要 ▼';
+      }
+    });
+  });
 }
 
 </script>
