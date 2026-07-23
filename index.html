@@ -860,6 +860,33 @@ function showDDI() {
   }
   html += '<div class="ddi-disclaimer">以上建议来自专家指南/共识原文，具体决策建议请结合患者个体情况。</div>';
   html += '</div>';
+
+  // 底部参考文献区域（固定两篇，不随药物变化）
+  html += '<div class="answer-refs" style="margin-top:12px;border:1.5px solid #f59e0b;border-radius:8px;padding:12px 14px;background:#fffbeb;">';
+  html += '<div class="refs-label" style="font-weight:600;color:#92400e;margin-bottom:8px;">参考文献</div>';
+
+  // 文献1：Krauss GL Neurol Ther 2022
+  html += '<div class="ref-item ref-expandable" style="margin-bottom:8px;">';
+  html += '<div class="ref-text">Smith MC, Klein P, Krauss GL, et al. Optimizing Tolerability of Cenobamate (YKP3089) in Patients with Uncontrolled Focal Seizures: Expert Consensus Recommendations. Neurol Ther. 2022;11(4):1705-1720. PMID: 36201148</div>';
+  html += '<button class="ref-toggle" data-ref-id="ddi-ref-krauss" style="margin-top:4px;font-size:12px;color:#6366f1;background:none;border:none;cursor:pointer;padding:0;">查看中文摘要 ▼</button>';
+  html += '<div id="ddi-ref-krauss" style="display:none;margin-top:6px;font-size:13px;color:#374151;line-height:1.6;background:#f3f4f6;border-radius:6px;padding:8px 10px;">';
+  html += '目的：为在成人难治性局灶性发作患者中，cenobamate加用于现有ASM方案时，通过调整联用ASM剂量来改善耐受性，提供专家共识建议。<br><br>方法：由7位具有丰富cenobamate使用经验的癫痫专家组成专家组，采用改良Delphi法达成共识，讨论cenobamate滴定期间联用ASM的耐受性问题及预防或减轻不良反应的剂量调整策略。<br><br>结果：推荐在cenobamate滴定期间，预防性降低氯巴占（基于已知DDI）、苯妥英（基于已知DDI）、苯巴比妥（基于已知DDI）和拉科酰胺（基于药效学相互作用）的剂量，以预防不良反应。对于标准剂量的其他ASM，出现不良反应后再反应性减量即可。对于超过标准剂量上限的卡马西平（>1200 mg/天）和拉莫三嗪（>500 mg/天），建议在cenobamate达200 mg/天时考虑预防性减量。<br><br>结论：推荐减量联用ASM的首要目标是预防或消除不良反应，从而使cenobamate能够达到最佳剂量，最大程度发挥改善发作控制的潜力。';
+  html += '</div>';
+  html += '<a href="https://pubmed.ncbi.nlm.nih.gov/36201148/" target="_blank" style="font-size:12px;color:#6366f1;text-decoration:none;display:inline-block;margin-top:4px;">前往PubMed →</a>';
+  html += '</div>';
+
+  // 文献2：Carreño M Epilepsia Open 2024
+  html += '<div class="ref-item ref-expandable">';
+  html += '<div class="ref-text">Carreño M, et al. Spanish consensus on the management of concomitant antiseizure medications when using cenobamate in adults with drug-resistant focal seizures. Epilepsia Open. 2024;9(3):1046-1059. PMID: 38613812</div>';
+  html += '<button class="ref-toggle" data-ref-id="ddi-ref-spanish" style="margin-top:4px;font-size:12px;color:#6366f1;background:none;border:none;cursor:pointer;padding:0;">查看中文摘要 ▼</button>';
+  html += '<div id="ddi-ref-spanish" style="display:none;margin-top:6px;font-size:13px;color:#374151;line-height:1.6;background:#f3f4f6;border-radius:6px;padding:8px 10px;">';
+  html += '目的：为在成人难治性局灶性发作患者中使用cenobamate时，如何管理联用抗癫痫发作药物（ASM），提供西班牙专家共识建议。<br><br>方法：由6位西班牙癫痫专家组成专家组，基于文献综述和临床经验，采用Delphi法就cenobamate联用ASM的调整策略达成共识。<br><br>结果：专家组就以下方面达成共识：①调整时机：大多数药物在cenobamate达25-50 mg/天时即开始预防性调整，早于Krauss共识建议的150-200 mg/天；②多种钠通道阻滞剂（SCB）联用：只要患者同时使用≥2种SCB，无论剂量如何，均应预防性减停至少一种；③具体药物：氯巴占、苯妥英、苯巴比妥需预防性减量，卡马西平（≥800 mg/天）和拉莫三嗪（>300 mg/天）的高剂量门槛低于Krauss共识；④慢滴定不能改善耐受性，关键是主动管理联用药物。<br><br>结论：西班牙共识强调更早、更主动地调整联用ASM，以确保cenobamate能够达到有效剂量至关重要。';
+  html += '</div>';
+  html += '<a href="https://pubmed.ncbi.nlm.nih.gov/38613812/" target="_blank" style="font-size:12px;color:#6366f1;text-decoration:none;display:inline-block;margin-top:4px;">前往PubMed →</a>';
+  html += '</div>';
+
+  html += '</div>';
+
   result.innerHTML = html;
   result.style.display = 'block';
   // 事件委托：为所有参考文献折叠按钮绑定点击事件
