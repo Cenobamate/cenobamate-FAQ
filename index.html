@@ -605,6 +605,9 @@
     .ref-abstract { font-size: 12px; color: #4b5563; line-height: 1.7; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px; margin-top: 6px; margin-bottom: 6px; white-space: pre-line; }
     .ref-link { display: inline-block; font-size: 12px; color: #6366f1; text-decoration: none; padding: 3px 10px; border: 1px solid #6366f1; border-radius: 4px; }
     .ref-link:hover { background: #eef2ff; }
+  
+  .ddi-timing-refs { margin-top: 12px; border-top: 1px solid #fcd34d; padding-top: 10px; }
+  .ddi-timing-refs-title { font-size: 13px; font-weight: 600; color: #92400e; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -832,28 +835,7 @@ function showDDI() {
   html += '<div class="ddi-field"><span class="ddi-label">DDI机制：</span><span class="ddi-content">' + escapeHtml(d.mechanism) + '</span></div>';
   html += '<div class="ddi-field"><span class="ddi-label">调整策略：</span><span class="ddi-strategy" style="color:' + borderColor + ';background:' + badgeBg + ';">' + escapeHtml(d.strategy) + '</span></div>';
   html += '<div class="ddi-field"><span class="ddi-label">具体建议：</span><span class="ddi-content">' + escapeHtml(d.advice) + '</span></div>';
-  // 渲染参考文献（带摘要折叠和PubMed链接）
-  if (d.refs && d.refs.length > 0) {
-    html += '<div class="ddi-field"><span class="ddi-label">参考文献：</span></div>';
-    html += '<div class="ddi-refs">';
-    for (var ri = 0; ri < d.refs.length; ri++) {
-      var ref = d.refs[ri];
-      var refId = 'ddi-ref-' + key + '-' + ri;
-      html += '<div class="ref-item">';
-      html += '<div class="ref-text">' + escapeHtml(ref.text) + '</div>';
-      if (ref.abstract_zh) {
-        html += '<button class="ref-toggle" data-ref-id="' + refId + '">查看中文摘要 ▼</button>';
-        html += '<div class="ref-abstract" id="' + refId + '" style="display:none;">' + escapeHtml(ref.abstract_zh) + '</div>';
-      }
-      if (ref.url) {
-        html += '<a class="ref-link" href="' + ref.url + '" target="_blank">前往PubMed →</a>';
-      }
-      html += '</div>';
-    }
-    html += '</div>';
-  } else {
-    html += '<div class="ddi-field"><span class="ddi-label">参考来源：</span><span class="ddi-content">' + escapeHtml(d.source) + '</span></div>';
-  }
+
   if (d.consensus) {
     if (d.consensus.hasDiff) {
       html += '<div class="ddi-consensus">';
@@ -895,6 +877,19 @@ function showDDI() {
       }
     });
   });
+}
+
+function toggleStaticRef(refId) {
+  var el = document.getElementById(refId);
+  var btn = el ? el.previousElementSibling : null;
+  if (!el || !btn) return;
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    btn.textContent = '收起摘要 ▲';
+  } else {
+    el.style.display = 'none';
+    btn.textContent = '查看中文摘要 ▼';
+  }
 }
 
 </script>
