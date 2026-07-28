@@ -1340,16 +1340,16 @@ const DRUG_DATA = {
   },
   carbamazepine: {
     name: "卡马西平",
-    type: "pd", typeLabel: "PD 药效学相互作用（CYP3A4诱导→血药浓度下降23%）",
+    type: "both", typeLabel: "PK+PD 相互作用（CYP3A4诱导→血药浓度下降23%）",
     reason: "西诺氨酯诱导CYP3A4，使卡马西平血药浓度下降23%；同时两者均为SCB，药效叠加可引发头晕、复视、震颤。注意：中国大陆说明书提示可能需增加卡马西平剂量，而美国共识根据临床经验不推荐增加，因血药浓度轻度下降可抵消药效叠加副作用，且多数患者癫痫控制不受影响。",
-    adviceUS: `<span class='badge badge-proactive'>主动调整</span><ul><li>卡马西平＞1200mg/d：西诺氨酯滴定至200mg/d时，减少卡马西平100–200mg/d</li><li>不推荐增加卡马西平剂量</li></ul><span class='badge badge-reactive'>被动调整</span><ul><li>出现头晕、复视、震颤等副作用时，减少卡马西平100–200mg/d，每2周按需重复</li></ul>`,
+    adviceUS: `<span class='badge badge-proactive'>主动调整</span><ul><li>卡马西平＞1200mg/d：西诺氨酯滴定至200mg/d时，减少卡马西平100–200mg/d</li><li>不推荐启用西诺氨酯时增加卡马西平剂量</li></ul><span class='badge badge-reactive'>被动调整</span><ul><li>出现头晕、复视、震颤等副作用时，减少卡马西平100–200mg/d，每2周按需重复</li></ul>`,
     adviceES: `<span class='badge badge-proactive'>主动调整</span><ul><li>联用≥2种SCBs：西诺氨酯滴定至12.5–100mg/d阶段，主动减量或撤除至少一种SCB</li><li>单用卡马西平但剂量≥800mg/d：西诺氨酯滴定至≥150mg/d时，可主动降低剂量，减量需缓慢进行</li></ul><span class='badge badge-reactive'>被动调整</span><ul><li>持续≥7天中度日间嗜睡、头晕：下调卡马西平剂量</li><li>重度嗜睡/头晕：立即减量；持续≥3天复视：立即减量</li><li>轻度但持续不适：小幅下调或调整服药时间</li></ul>`
   },
   lamotrigine: {
     name: "拉莫三嗪",
-    type: "pd", typeLabel: "PD 药效学相互作用（血药浓度下降21%–52%）",
+    type: "both", typeLabel: "PK+PD 相互作用（血药浓度下降21%–52%）",
     reason: "西诺氨酯使拉莫三嗪血药浓度下降21%–52%；同时两者均为SCB，药效叠加可引发头晕。注意：中国大陆说明书提示可能需增加拉莫三嗪剂量，而美国共识不推荐增加，因血药浓度轻度下降可抵消药效叠加副作用，且多数患者癫痫控制不受影响。",
-    adviceUS: `<span class='badge badge-proactive'>主动调整</span><ul><li>拉莫三嗪＞500mg/d：西诺氨酯滴定至200mg/d时，减少拉莫三嗪100mg/d</li><li>不推荐增加拉莫三嗪剂量</li></ul><span class='badge badge-reactive'>被动调整</span><ul><li>出现头晕等副作用时，减少拉莫三嗪100mg/d，每2周按需重复</li></ul>`,
+    adviceUS: `<span class='badge badge-proactive'>主动调整</span><ul><li>拉莫三嗪＞500mg/d：西诺氨酯滴定至200mg/d时，减少拉莫三嗪100mg/d</li><li>不推荐启用西诺氨酯时增加拉莫三嗪剂量</li></ul><span class='badge badge-reactive'>被动调整</span><ul><li>出现头晕等副作用时，减少拉莫三嗪100mg/d，每2周按需重复</li></ul>`,
     adviceES: `<span class='badge badge-proactive'>主动调整</span><ul><li>联用≥2种SCBs：西诺氨酯滴定至12.5–100mg/d阶段，主动减量或撤除至少一种SCB</li><li>单用拉莫三嗪但剂量＞300mg/d：西诺氨酯滴定至≥150mg/d时，可主动降低剂量，减量需缓慢进行</li></ul><span class='badge badge-reactive'>被动调整</span><ul><li>持续≥7天中度日间嗜睡、头晕：下调拉莫三嗪剂量</li><li>重度嗜睡/头晕：立即减量；持续≥3天复视：立即减量</li><li>轻度但持续不适：小幅下调或调整服药时间</li></ul>`
   },
   oxcarbazepine: {
