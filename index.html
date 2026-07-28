@@ -1408,7 +1408,7 @@ function showDrugDetail(key) {
   if (!key) { detail.classList.remove('visible'); return; }
   const d = DRUG_DATA[key];
   if (!d) { detail.classList.remove('visible'); return; }
-  const typeBadgeClass = d.type === 'pk' ? 'badge-pk' : d.type === 'pd' ? 'badge-pd' : 'badge-both';
+  const typeBadgeClass = d.type === 'pk' ? 'badge-pk' : d.type === 'pd' ? 'badge-pd' : d.type === 'both' ? 'badge-both' : 'badge-none';
   detail.innerHTML = `
     <div class="drug-detail-name">${d.name}</div>
     <div class="detail-row">
