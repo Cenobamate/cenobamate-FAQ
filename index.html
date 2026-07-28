@@ -1239,36 +1239,44 @@ function toggleStaticRef(refId) {
 }
 
 
-/* === DDI2联用方案查询JS === */
+/* === DDI2联用方案查询JS（事件委托版，兼容动态渲染） === */
 
-(function(){
-  // 阶段切换
-  var btns = document.querySelectorAll('.stage-btn');
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.stage-btn');
+  if (!btn) return;
+  
+  // 找同一容器内所有按钮
+  var container = btn.closest('.stage-btns') || document.querySelector('.stage-btns');
+  var btns = container ? container.querySelectorAll('.stage-btn') : document.querySelectorAll('.stage-btn');
   var panels = document.querySelectorAll('.stage-panel');
-  btns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var stage = btn.getAttribute('data-stage');
-      btns.forEach(function(b){ b.classList.remove('active'); });
-      panels.forEach(function(p){ p.classList.remove('active'); });
-      btn.classList.add('active');
-      var panel = document.getElementById(stage);
-      if(panel){ panel.classList.add('active'); }
-    });
-  });
+  
+  var stage = btn.getAttribute('data-stage');
+  
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  panels.forEach(function(p){ p.classList.remove('active'); });
+  btn.classList.add('active');
+  
+  var panel = document.getElementById(stage);
+  if (panel) { panel.classList.add('active'); }
+  
+  // 同步更新剂量标题（.stage-title）
+  var title = document.querySelector('.stage-title');
+  if (title) {
+    title.textContent = btn.textContent.trim();
+  }
+});
 
-  // 参考文献摘要折叠（data 属性 + 事件监听，避免 onclick 转义问题）
-  var refBtns = document.querySelectorAll('.ref-btn[data-ref]');
-  refBtns.forEach(function(rbtn){
-    rbtn.addEventListener('click', function(){
-      var refId = rbtn.getAttribute('data-ref');
-      var ab = document.getElementById(refId);
-      if(ab){
-        var showing = ab.classList.toggle('show');
-        rbtn.classList.toggle('open', showing);
-      }
-    });
-  });
-})();
+// 参考文献摘要折叠（事件委托，兼容动态渲染）
+document.addEventListener('click', function(e) {
+  var rbtn = e.target.closest('.ref-btn[data-ref]');
+  if (!rbtn) return;
+  var refId = rbtn.getAttribute('data-ref');
+  var ab = document.getElementById(refId);
+  if (ab) {
+    var showing = ab.classList.toggle('show');
+    rbtn.classList.toggle('open', showing);
+  }
+});
 
 </script>
 </body>
