@@ -123,36 +123,62 @@
   .tabs-wrap {
     background: var(--white);
     border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    scrollbar-width: none;
     position: sticky;
     top: 130px;
     z-index: 90;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .tabs-wrap.nav-hidden {
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
   }
   .tabs-wrap::-webkit-scrollbar { display: none; }
   .tabs {
-    display: flex;
-    padding: 0 12px;
-    gap: 4px;
-    min-width: max-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 10px 12px;
   }
   .tab {
-    padding: 10px 14px;
+    padding: 10px 8px;
     font-size: 13px;
     font-weight: 500;
     color: var(--text-secondary);
     cursor: pointer;
-    border-bottom: 2.5px solid transparent;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    text-align: center;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: all 0.2s;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
   .tab.active {
-    color: var(--purple);
-    border-bottom-color: var(--purple);
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
     font-weight: 600;
+    box-shadow: 0 2px 8px rgba(91,45,142,0.25);
   }
-  .tab:hover:not(.active) { color: var(--purple-light); }
+  .tab:hover:not(.active) {
+    border-color: var(--purple-light);
+    color: var(--purple);
+    background: var(--purple-bg);
+  }
+  /* 屏幕高度较小时压缩导航 */
+  @media (max-height: 700px) {
+    .tabs { gap: 4px; padding: 6px 12px; }
+    .tab { padding: 7px 6px; font-size: 12px; }
+  }
+  @media (max-height: 580px) {
+    .tabs { gap: 3px; padding: 4px 12px; }
+    .tab { padding: 5px 6px; font-size: 11px; border-radius: 6px; }
+  }
 
   /* Main content */
   .main {
@@ -1435,6 +1461,37 @@ function showDrugDetail(key) {
   `;
   detail.classList.add('visible');
 }
+
+  // ── Scroll-hide navigation ──────────────────────────────
+  (function() {
+    var lastScrollY = window.scrollY;
+    var ticking = false;
+    var navWrap = null;
+    var HIDE_THRESHOLD = 60; // px scrolled down before hiding
+
+    function onScroll() {
+      if (!navWrap) navWrap = document.querySelector('.tabs-wrap');
+      if (!navWrap) return;
+      var currentY = window.scrollY;
+      var delta = currentY - lastScrollY;
+      if (delta > HIDE_THRESHOLD && currentY > 80) {
+        // scrolling down fast enough → hide
+        navWrap.classList.add('nav-hidden');
+      } else if (delta < -10) {
+        // scrolling up → show
+        navWrap.classList.remove('nav-hidden');
+      }
+      lastScrollY = currentY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
 </script>
 </body>
 </html>
