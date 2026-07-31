@@ -1467,7 +1467,7 @@ function showDrugDetail(key) {
     var lastScrollY = window.scrollY;
     var ticking = false;
     var navWrap = null;
-    var HIDE_THRESHOLD = 60; // px scrolled down before hiding
+    var HIDE_THRESHOLD = 5; // px scrolled down before hiding
 
     function onScroll() {
       if (!navWrap) navWrap = document.querySelector('.tabs-wrap');
