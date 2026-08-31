@@ -1459,6 +1459,12 @@ function showDrugDetail(key) {
   detail.classList.add('visible');
 }
 
+  // ── Init ──────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    renderTabs();
+    renderContent();
+  });
+
   // ── Scroll-hide navigation ──────────────────────────────
   (function() {
     var lastScrollY = window.scrollY;
