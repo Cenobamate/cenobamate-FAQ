@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>翼弗瑞® 文献速查</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --purple: #5B2D8E;
+    --purple-dark: #3D1A6B;
+    --purple-light: #7B4DB8;
+    --purple-bg: #F3EEF9;
+    --purple-mid: #E8DFF5;
+    --orange: #F5821F;
+    --orange-light: #FFF0E0;
+    --orange-mid: #FFCF99;
+    --text: #1A1A2E;
+    --text-secondary: #5A5A7A;
+    --border: #DDD5EE;
+    --white: #FFFFFF;
+    --shadow: 0 2px 12px rgba(91,45,142,0.10);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    background: var(--purple-bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 60%, var(--purple-light) 100%);
+    padding: 20px 20px 16px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(61,26,107,0.25);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .back-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.28); }
+  .header-title h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .header-title p {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  .badge {
+    margin-left: auto;
+    background: var(--orange);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+  }
+  .search-icon {
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  #searchInput {
+    width: 100%;
+    padding: 11px 40px 11px 38px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255,255,255,0.18);
+    color: white;
+    font-size: 15px;
+    outline: none;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s;
+  }
+  #searchInput::placeholder { color: rgba(255,255,255,0.6); }
+  #searchInput:focus { background: rgba(255,255,255,0.28); }
+  .clear-btn {
+    position: absolute;
+    right: 10px; top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.25);
+    border: none;
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    font-size: 13px;
+    cursor: pointer;
+    display: none;
+    align-items: center; justify-content: center;
+  }
+  .clear-btn.show { display: flex; }
+
+  /* Tabs */
+  .tabs-wrap {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 122px;
+    z-index: 90;
+  }
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    text-align: center;
+    white-space: nowrap;
+    transition: all 0.2s;
+    user-select: none;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .tab.active {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(91,45,142,0.25);
+  }
+  .tab:hover:not(.active) {
+    border-color: var(--purple-light);
+    color: var(--purple);
+    background: var(--purple-bg);
+  }
+
+  /* Year sub-tabs */
+  .year-tabs {
+    display: none;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--purple-bg);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .year-tabs::-webkit-scrollbar { display: none; }
+  .year-tabs.show { display: flex; }
+  .year-tab {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .year-tab.active {
+    background: var(--purple-light);
+    color: white;
+    border-color: var(--purple-light);
+  }
+  .year-tab:hover:not(.active) {
+    border-color: var(--purple-light);
+    color: var(--purple);
+  }
+
+  /* Category filter */
+  .filter-section {
+    padding: 10px 12px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .filter-label::before {
+    content: '';
+    width: 3px; height: 12px;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .chip {
+    padding: 5px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .chip.active {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+    font-weight: 600;
+  }
+  .chip:hover:not(.active) {
+    border-color: var(--purple-light);
+    color: var(--purple);
+  }
+  .chip .count {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-left: 2px;
+  }
+
+  /* Main content */
+  .main {
+    flex: 1;
+    padding: 14px 14px 80px;
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Result count */
+  .result-info {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding: 0 2px;
+  }
+  .result-info span { color: var(--purple); font-weight: 600; }
+
+  /* Literature Cards */
+  .lit-card {
+    background: var(--white);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+  .lit-card:hover { box-shadow: 0 4px 20px rgba(91,45,142,0.15); }
+
+  .lit-body {
+    padding: 14px 16px;
+  }
+  .lit-category {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: var(--purple-mid);
+    color: var(--purple);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .lit-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .lit-meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .lit-meta .authors { font-weight: 500; }
+  .lit-meta .journal { font-style: italic; }
+  .lit-meta .date {
+    display: inline-block;
+    background: var(--purple-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-left: 4px;
+  }
+  .lit-summary {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text);
+    padding: 8px 10px;
+    background: var(--orange-light);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 10px;
+  }
+  .lit-pmid {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--orange);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .lit-pmid:hover { background: #E0741A; }
+  .lit-pmid .icon { font-size: 13px; }
+
+  /* Highlight */
+  mark {
+    background: var(--orange-mid);
+    color: var(--text);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+  }
+  .empty-state .emoji { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 15px; }
+  .empty-state small { font-size: 13px; opacity: 0.7; }
+
+  /* Coming soon */
+  .coming-soon {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-secondary);
+  }
+  .coming-soon .emoji { font-size: 56px; margin-bottom: 16px; }
+  .coming-soon h2 { font-size: 18px; font-weight: 600; color: var(--purple); margin-bottom: 8px; }
+  .coming-soon p { font-size: 14px; }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+  }
+  .loading .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--purple-mid);
+    border-top-color: var(--purple);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading p { font-size: 14px; }
+
+  /* Error */
+  .error-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+  }
+  .error-state .emoji { font-size: 48px; margin-bottom: 12px; }
+  .error-state p { font-size: 15px; margin-bottom: 8px; }
+  .error-state small { font-size: 13px; opacity: 0.7; }
+
+  /* Footer */
+  .footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-secondary);
+    z-index: 80;
+  }
+  .footer strong { color: var(--purple); }
+
+  /* Mobile responsive */
+  @media (max-width: 380px) {
+    .header-title h1 { font-size: 16px; }
+    .lit-title { font-size: 14px; }
+    .lit-summary { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <a href="index.html" class="back-btn">‹</a>
+    <div class="header-title">
+      <h1>翼弗瑞® 文献速查</h1>
+      <p>西诺氨酯 · 最新文献追踪</p>
+    </div>
+    <div class="badge" id="litCount">文献</div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="搜索标题、作者、关键词…" autocomplete="off">
+    <button class="clear-btn" id="clearBtn">✕</button>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <div class="tab active" data-tab="annual" onclick="switchTab('annual')">年度文献</div>
+    <div class="tab" data-tab="core" onclick="switchTab('core')">核心临床研究</div>
+  </div>
+</div>
+
+<div class="year-tabs show" id="yearTabs"></div>
+
+<div class="filter-section" id="filterSection">
+  <div class="filter-label">分类筛选</div>
+  <div class="filter-chips" id="filterChips"></div>
+</div>
+
+<div class="main" id="mainContent">
+  <div class="loading">
+    <div class="spinner"></div>
+    <p>正在加载文献数据…</p>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>翼弗瑞®</strong> 文献速查 · 仅供医疗专业人士使用 · 请勿对外传播
+</div>
+
+<script>
+var LIT_DATA = null;
+var activeTab = 'annual';
+var activeYear = null;
+var activeCategories = [];
+var searchQuery = '';
+
+function loadData() {
+  fetch('literature-data.json')
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      LIT_DATA = data;
+      document.getElementById('litCount').textContent = data.literature.length + ' 篇';
+      initYearTabs();
+      initFilterChips();
+      render();
+    })
+    .catch(function(err) {
+      document.getElementById('mainContent').innerHTML =
+        '<div class="error-state">' +
+        '<div class="emoji">⚠️</div>' +
+        '<p>数据加载失败</p>' +
+        '<small>请检查网络连接后刷新页面</small>' +
+        '</div>';
+    });
+}
+
+function initYearTabs() {
+  var years = [];
+  LIT_DATA.literature.forEach(function(l) {
+    if (years.indexOf(l.year) === -1) years.push(l.year);
+  });
+  years.sort(function(a, b) { return b - a; });
+
+  var html = '';
+  years.forEach(function(y, i) {
+    var count = LIT_DATA.literature.filter(function(l) { return l.year === y; }).length;
+    var cls = (i === 0) ? 'year-tab active' : 'year-tab';
+    html += '<div class="' + cls + '" data-year="' + y + '" onclick="selectYear(' + y + ')">' + y + ' (' + count + ')</div>';
+  });
+  document.getElementById('yearTabs').innerHTML = html;
+  activeYear = years[0];
+}
+
+function initFilterChips() {
+  var html = '';
+  LIT_DATA.categories.forEach(function(cat) {
+    var count = LIT_DATA.literature.filter(function(l) { return l.category === cat; }).length;
+    if (count > 0) {
+      html += '<div class="chip" data-cat="' + cat + '" onclick="toggleCategory(\'' + cat + '\')">' + cat + '<span class="count">' + count + '</span></div>';
+    }
+  });
+  html += '<div class="chip" onclick="clearCategories()" style="border-color:var(--orange);color:var(--orange);">清除</div>';
+  document.getElementById('filterChips').innerHTML = html;
+}
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-tab') === tab);
+  });
+
+  var yearTabs = document.getElementById('yearTabs');
+  var filterSection = document.getElementById('filterSection');
+
+  if (tab === 'annual') {
+    yearTabs.classList.add('show');
+    filterSection.style.display = 'block';
+  } else {
+    yearTabs.classList.remove('show');
+    filterSection.style.display = 'none';
+  }
+  render();
+}
+
+function selectYear(year) {
+  activeYear = year;
+  document.querySelectorAll('.year-tab').forEach(function(t) {
+    t.classList.toggle('active', parseInt(t.getAttribute('data-year')) === year);
+  });
+  render();
+}
+
+function toggleCategory(cat) {
+  var idx = activeCategories.indexOf(cat);
+  if (idx > -1) {
+    activeCategories.splice(idx, 1);
+  } else {
+    activeCategories.push(cat);
+  }
+  document.querySelectorAll('.chip').forEach(function(c) {
+    var cCat = c.getAttribute('data-cat');
+    if (cCat) {
+      c.classList.toggle('active', activeCategories.indexOf(cCat) > -1);
+    }
+  });
+  render();
+}
+
+function clearCategories() {
+  activeCategories = [];
+  document.querySelectorAll('.chip').forEach(function(c) {
+    if (c.getAttribute('data-cat')) c.classList.remove('active');
+  });
+  render();
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  searchQuery = '';
+  document.getElementById('clearBtn').classList.remove('show');
+  render();
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function highlight(text, query) {
+  if (!query) return escapeHtml(text);
+  var escaped = escapeHtml(text);
+  var regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return escaped.replace(regex, '<mark>$1</mark>');
+}
+
+function getFiltered() {
+  return LIT_DATA.literature.filter(function(l) {
+    if (activeTab === 'annual' && l.year !== activeYear) return false;
+    if (activeCategories.length > 0 && activeCategories.indexOf(l.category) === -1) return false;
+    if (searchQuery) {
+      var q = searchQuery.toLowerCase();
+      var haystack = (l.title + ' ' + l.authors + ' ' + l.summary + ' ' + l.journal + ' ' + l.category).toLowerCase();
+      if (haystack.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+}
+
+function render() {
+  if (activeTab === 'core') {
+    document.getElementById('mainContent').innerHTML =
+      '<div class="coming-soon">' +
+      '<div class="emoji">📋</div>' +
+      '<h2>即将更新</h2>' +
+      '<p>核心临床研究板块正在整理中，敬请期待</p>' +
+      '</div>';
+    return;
+  }
+
+  var filtered = getFiltered();
+
+  if (filtered.length === 0) {
+    document.getElementById('mainContent').innerHTML =
+      '<div class="empty-state">' +
+      '<div class="emoji">🔍</div>' +
+      '<p>未找到匹配的文献</p>' +
+      '<small>试试调整筛选条件或搜索关键词</small>' +
+      '</div>';
+    return;
+  }
+
+  var html = '<div class="result-info">共 <span>' + filtered.length + '</span> 篇文献</div>';
+
+  filtered.forEach(function(l) {
+    html += '<div class="lit-card">' +
+      '<div class="lit-body">' +
+        '<span class="lit-category">' + l.category + '</span>' +
+        '<div class="lit-title">' + highlight(l.title, searchQuery) + '</div>' +
+        '<div class="lit-meta">' +
+          '<span class="authors">' + highlight(l.authors, searchQuery) + '</span> · ' +
+          '<span class="journal">' + highlight(l.journal, searchQuery) + '</span>' +
+          '<span class="date">' + l.date + '</span>' +
+        '</div>' +
+        '<div class="lit-summary">' + highlight(l.summary, searchQuery) + '</div>' +
+        '<a href="https://pubmed.ncbi.nlm.nih.gov/' + l.pmid + '/" target="_blank" rel="noopener" class="lit-pmid">' +
+          '<span class="icon">🔗</span> PMID: ' + l.pmid +
+        '</a>' +
+      '</div>' +
+    '</div>';
+  });
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+/* Search input */
+document.getElementById('searchInput').addEventListener('input', function(e) {
+  searchQuery = e.target.value.trim();
+  document.getElementById('clearBtn').classList.toggle('show', searchQuery.length > 0);
+  render();
+});
+
+document.getElementById('clearBtn').addEventListener('click', clearSearch);
+
+/* Load data on page load */
+loadData();
+</script>
+</body>
+</html>
