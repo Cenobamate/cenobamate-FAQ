@@ -1,0 +1,74 @@
+name: Weekly PubMed Search
+
+on:
+  schedule:
+    # 每周一 00:00 UTC = 北京时间 08:00
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # 支持手动触发
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  search-and-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run PubMed search script
+        run: python .github/scripts/search_pubmed.py
+        env:
+          LITERATURE_DATA_PATH: literature-data.json
+
+      - name: Check for new papers
+        id: check_papers
+        run: |
+          COUNT=$(cat new_paper_count.txt)
+          echo "new_paper_count=$COUNT" >> $GITHUB_OUTPUT
+          echo "新增文献数量: $COUNT"
+
+      - name: Create pending branch if not exists
+        if: steps.check_papers.outputs.new_paper_count != '0'
+        run: |
+          if git ls-remote --heads origin pending | grep -q pending; then
+            echo "pending 分支已存在"
+          else
+            echo "创建 pending 分支"
+            git checkout -b pending
+            git push origin pending
+            git checkout main
+          fi
+
+      - name: Commit pending-papers.json to pending branch
+        if: steps.check_papers.outputs.new_paper_count != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout pending
+          git checkout main -- pending-papers.json pending_papers_list.json
+          git add pending-papers.json pending_papers_list.json
+          git commit -m "Add pending papers ($(TZ=Asia/Shanghai date '+%Y-%m-%d'))" || echo "No changes to commit"
+          git push origin pending
+          git checkout main
+
+      - name: Create GitHub Issue for confirmation
+        if: steps.check_papers.outputs.new_paper_count != '0'
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python .github/scripts/create_issue.py
+
+      - name: No new papers notification
+        if: steps.check_papers.outputs.new_paper_count == '0'
+        run: |
+          echo "📭 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M') (北京时间) — 本周无新增 cenobamate 文献，工作流静默结束。"
