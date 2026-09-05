@@ -124,97 +124,30 @@
   }
   .clear-btn.show { display: flex; }
 
-  /* Tabs */
-  .tabs-wrap {
+  /* Filter section with dropdowns */
+  .filter-section {
     background: var(--white);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 122px;
     z-index: 90;
+    padding: 10px 14px;
   }
-  .tabs {
+  .filter-row {
     display: flex;
-    gap: 6px;
-    padding: 10px 12px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    align-items: center;
   }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab {
-    padding: 10px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    cursor: pointer;
-    border-radius: 8px;
-    border: 1.5px solid var(--border);
-    background: var(--white);
-    text-align: center;
-    white-space: nowrap;
-    transition: all 0.2s;
-    user-select: none;
-    flex-shrink: 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  }
-  .tab.active {
-    background: var(--purple);
-    color: white;
-    border-color: var(--purple);
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(91,45,142,0.25);
-  }
-  .tab:hover:not(.active) {
-    border-color: var(--purple-light);
-    color: var(--purple);
-    background: var(--purple-bg);
-  }
-
-  /* Year sub-tabs */
-  .year-tabs {
-    display: none;
-    gap: 6px;
-    padding: 8px 12px;
-    background: var(--purple-bg);
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .year-tabs::-webkit-scrollbar { display: none; }
-  .year-tabs.show { display: flex; }
-  .year-tab {
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    cursor: pointer;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    background: var(--white);
-    white-space: nowrap;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-  .year-tab.active {
-    background: var(--purple-light);
-    color: white;
-    border-color: var(--purple-light);
-  }
-  .year-tab:hover:not(.active) {
-    border-color: var(--purple-light);
-    color: var(--purple);
-  }
-
-  /* Category filter */
-  .filter-section {
-    padding: 10px 12px;
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
+  .filter-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
   .filter-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--text-secondary);
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -225,37 +158,31 @@
     background: var(--orange);
     border-radius: 2px;
   }
-  .filter-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .chip {
-    padding: 5px 11px;
-    font-size: 12px;
+  select {
+    width: 100%;
+    padding: 8px 28px 8px 12px;
+    font-size: 13px;
     font-weight: 500;
-    color: var(--text-secondary);
-    cursor: pointer;
-    border-radius: 16px;
-    border: 1px solid var(--border);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
     background: var(--white);
+    cursor: pointer;
+    outline: none;
     transition: all 0.2s;
-    user-select: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235B2D8E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
   }
-  .chip.active {
-    background: var(--purple);
-    color: white;
-    border-color: var(--purple);
-    font-weight: 600;
-  }
-  .chip:hover:not(.active) {
+  select:focus, select:hover {
     border-color: var(--purple-light);
-    color: var(--purple);
   }
-  .chip .count {
-    font-size: 10px;
-    opacity: 0.7;
-    margin-left: 2px;
+  select.active {
+    border-color: var(--purple);
+    background-color: var(--purple-bg);
   }
 
   /* Main content */
@@ -291,73 +218,77 @@
   .lit-body {
     padding: 14px 16px;
   }
+  
+  /* Category tag with color */
   .lit-category {
     display: inline-block;
     font-size: 11px;
-    padding: 2px 8px;
+    font-weight: 600;
+    padding: 2px 10px;
     border-radius: 20px;
-    background: var(--purple-mid);
-    color: var(--purple);
-    font-weight: 500;
     margin-bottom: 8px;
   }
+  .cat-真实世界研究 { background: #E3F2FD; color: #1565C0; }
+  .cat-临床试验 { background: #E8F5E9; color: #2E7D32; }
+  .cat-安全性与耐受性 { background: #FFF3E0; color: #E65100; }
+  .cat-药物相互作用 { background: #F3E5F5; color: #7B1FA2; }
+  .cat-特殊人群 { background: #E0F7FA; color: #00838F; }
+  .cat-机制研究 { background: #ECEFF1; color: #455A64; }
+  .cat-综述与Meta分析 { background: #FCE4EC; color: #AD1457; }
+  .cat-其他 { background: var(--purple-mid); color: var(--purple); }
+
   .lit-title {
     font-size: 15px;
     font-weight: 600;
-    line-height: 1.45;
     color: var(--text);
+    line-height: 1.4;
     margin-bottom: 6px;
   }
+  .lit-title a {
+    color: var(--purple);
+    text-decoration: none;
+  }
+  .lit-title a:hover {
+    text-decoration: underline;
+  }
+
   .lit-meta {
     font-size: 12px;
     color: var(--text-secondary);
-    line-height: 1.5;
     margin-bottom: 8px;
+    line-height: 1.5;
   }
   .lit-meta .authors { font-weight: 500; }
-  .lit-meta .journal { font-style: italic; }
-  .lit-meta .date {
-    display: inline-block;
-    background: var(--purple-bg);
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-    margin-left: 4px;
-  }
+  .lit-meta .date { margin-left: 4px; }
+
   .lit-summary {
     font-size: 13px;
-    line-height: 1.65;
     color: var(--text);
-    padding: 8px 10px;
-    background: var(--orange-light);
-    border-left: 3px solid var(--orange);
-    border-radius: 0 6px 6px 0;
-    margin-bottom: 10px;
+    line-height: 1.7;
+    margin-bottom: 8px;
   }
+
   .lit-pmid {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: var(--orange);
-    color: white;
     font-size: 12px;
-    font-weight: 600;
-    padding: 5px 12px;
-    border-radius: 16px;
+    color: var(--purple);
     text-decoration: none;
+    background: var(--purple-bg);
+    padding: 3px 10px;
+    border-radius: 6px;
     transition: background 0.2s;
-    cursor: pointer;
-    border: none;
   }
-  .lit-pmid:hover { background: #E0741A; }
-  .lit-pmid .icon { font-size: 13px; }
+  .lit-pmid:hover {
+    background: var(--purple-mid);
+  }
 
-  /* Highlight */
   mark {
-    background: var(--orange-mid);
+    background: var(--orange-light);
     color: var(--text);
-    border-radius: 2px;
-    padding: 0 1px;
+    padding: 1px 3px;
+    border-radius: 3px;
   }
 
   /* Empty state */
@@ -367,18 +298,8 @@
     color: var(--text-secondary);
   }
   .empty-state .emoji { font-size: 48px; margin-bottom: 12px; }
-  .empty-state p { font-size: 15px; }
+  .empty-state p { font-size: 15px; margin-bottom: 8px; }
   .empty-state small { font-size: 13px; opacity: 0.7; }
-
-  /* Coming soon */
-  .coming-soon {
-    text-align: center;
-    padding: 80px 20px;
-    color: var(--text-secondary);
-  }
-  .coming-soon .emoji { font-size: 56px; margin-bottom: 16px; }
-  .coming-soon h2 { font-size: 18px; font-weight: 600; color: var(--purple); margin-bottom: 8px; }
-  .coming-soon p { font-size: 14px; }
 
   /* Loading */
   .loading {
@@ -426,6 +347,7 @@
     .header-title h1 { font-size: 16px; }
     .lit-title { font-size: 14px; }
     .lit-summary { font-size: 12px; }
+    .filter-row { flex-direction: column; gap: 6px; }
   }
 </style>
 </head>
@@ -447,18 +369,31 @@
   </div>
 </div>
 
-<div class="tabs-wrap">
-  <div class="tabs">
-    <div class="tab active" data-tab="annual" onclick="switchTab('annual')">年度文献</div>
-    <div class="tab" data-tab="core" onclick="switchTab('core')">核心临床研究</div>
+<div class="filter-section">
+  <div class="filter-row">
+    <div class="filter-group">
+      <div class="filter-label">分类筛选</div>
+      <select id="categoryFilter" onchange="filterChange()">
+        <option value="all">全部分类</option>
+        <option value="真实世界研究">真实世界研究</option>
+        <option value="临床试验">临床试验</option>
+        <option value="安全性与耐受性">安全性与耐受性</option>
+        <option value="药物相互作用">药物相互作用</option>
+        <option value="特殊人群">特殊人群</option>
+        <option value="机制研究">机制研究</option>
+        <option value="综述与Meta分析">综述与Meta分析</option>
+        <option value="其他">其他</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label">年份筛选</div>
+      <select id="yearFilter" onchange="filterChange()">
+        <option value="all">全部年份</option>
+        <option value="2026">2026</option>
+        <option value="2025">2025</option>
+      </select>
+    </div>
   </div>
-</div>
-
-<div class="year-tabs show" id="yearTabs"></div>
-
-<div class="filter-section" id="filterSection">
-  <div class="filter-label">分类筛选</div>
-  <div class="filter-chips" id="filterChips"></div>
 </div>
 
 <div class="main" id="mainContent">
@@ -474,9 +409,8 @@
 
 <script>
 var LIT_DATA = null;
-var activeTab = 'annual';
-var activeYear = null;
-var activeCategories = [];
+var activeCategory = 'all';
+var activeYear = 'all';
 var searchQuery = '';
 
 function loadData() {
@@ -485,8 +419,7 @@ function loadData() {
     .then(function(data) {
       LIT_DATA = data;
       document.getElementById('litCount').textContent = data.literature.length + ' 篇';
-      initYearTabs();
-      initFilterChips();
+      initYearFilter();
       render();
     })
     .catch(function(err) {
@@ -499,83 +432,33 @@ function loadData() {
     });
 }
 
-function initYearTabs() {
+function initYearFilter() {
   var years = [];
   LIT_DATA.literature.forEach(function(l) {
     if (years.indexOf(l.year) === -1) years.push(l.year);
   });
   years.sort(function(a, b) { return b - a; });
 
-  var html = '';
-  years.forEach(function(y, i) {
+  var yearSelect = document.getElementById('yearFilter');
+  // Keep "全部年份" option
+  var currentHtml = '<option value="all">全部年份</option>';
+  years.forEach(function(y) {
     var count = LIT_DATA.literature.filter(function(l) { return l.year === y; }).length;
-    var cls = (i === 0) ? 'year-tab active' : 'year-tab';
-    html += '<div class="' + cls + '" data-year="' + y + '" onclick="selectYear(' + y + ')">' + y + ' (' + count + ')</div>';
+    currentHtml += '<option value="' + y + '">' + y + ' (' + count + '篇)</option>';
   });
-  document.getElementById('yearTabs').innerHTML = html;
-  activeYear = years[0];
+  yearSelect.innerHTML = currentHtml;
 }
 
-function initFilterChips() {
-  var html = '';
-  LIT_DATA.categories.forEach(function(cat) {
-    var count = LIT_DATA.literature.filter(function(l) { return l.category === cat; }).length;
-    if (count > 0) {
-      html += '<div class="chip" data-cat="' + cat + '" onclick="toggleCategory(\'' + cat + '\')">' + cat + '<span class="count">' + count + '</span></div>';
-    }
-  });
-  html += '<div class="chip" onclick="clearCategories()" style="border-color:var(--orange);color:var(--orange);">清除</div>';
-  document.getElementById('filterChips').innerHTML = html;
-}
+function filterChange() {
+  var catSelect = document.getElementById('categoryFilter');
+  var yearSelect = document.getElementById('yearFilter');
+  activeCategory = catSelect.value;
+  activeYear = yearSelect.value;
 
-function switchTab(tab) {
-  activeTab = tab;
-  document.querySelectorAll('.tab').forEach(function(t) {
-    t.classList.toggle('active', t.getAttribute('data-tab') === tab);
-  });
+  // Update active styling
+  catSelect.classList.toggle('active', activeCategory !== 'all');
+  yearSelect.classList.toggle('active', activeYear !== 'all');
 
-  var yearTabs = document.getElementById('yearTabs');
-  var filterSection = document.getElementById('filterSection');
-
-  if (tab === 'annual') {
-    yearTabs.classList.add('show');
-    filterSection.style.display = 'block';
-  } else {
-    yearTabs.classList.remove('show');
-    filterSection.style.display = 'none';
-  }
-  render();
-}
-
-function selectYear(year) {
-  activeYear = year;
-  document.querySelectorAll('.year-tab').forEach(function(t) {
-    t.classList.toggle('active', parseInt(t.getAttribute('data-year')) === year);
-  });
-  render();
-}
-
-function toggleCategory(cat) {
-  var idx = activeCategories.indexOf(cat);
-  if (idx > -1) {
-    activeCategories.splice(idx, 1);
-  } else {
-    activeCategories.push(cat);
-  }
-  document.querySelectorAll('.chip').forEach(function(c) {
-    var cCat = c.getAttribute('data-cat');
-    if (cCat) {
-      c.classList.toggle('active', activeCategories.indexOf(cCat) > -1);
-    }
-  });
-  render();
-}
-
-function clearCategories() {
-  activeCategories = [];
-  document.querySelectorAll('.chip').forEach(function(c) {
-    if (c.getAttribute('data-cat')) c.classList.remove('active');
-  });
   render();
 }
 
@@ -598,10 +481,14 @@ function highlight(text, query) {
   return escaped.replace(regex, '<mark>$1</mark>');
 }
 
+function getCategoryClass(cat) {
+  return 'cat-' + cat.replace(/[^\u4e00-\u9fa5a-zA-Z]/g, '');
+}
+
 function getFiltered() {
   return LIT_DATA.literature.filter(function(l) {
-    if (activeTab === 'annual' && l.year !== activeYear) return false;
-    if (activeCategories.length > 0 && activeCategories.indexOf(l.category) === -1) return false;
+    if (activeCategory !== 'all' && l.category !== activeCategory) return false;
+    if (activeYear !== 'all' && l.year !== parseInt(activeYear)) return false;
     if (searchQuery) {
       var q = searchQuery.toLowerCase();
       var haystack = (l.title + ' ' + l.authors + ' ' + l.summary + ' ' + l.journal + ' ' + l.category).toLowerCase();
@@ -612,16 +499,6 @@ function getFiltered() {
 }
 
 function render() {
-  if (activeTab === 'core') {
-    document.getElementById('mainContent').innerHTML =
-      '<div class="coming-soon">' +
-      '<div class="emoji">📋</div>' +
-      '<h2>即将更新</h2>' +
-      '<p>核心临床研究板块正在整理中，敬请期待</p>' +
-      '</div>';
-    return;
-  }
-
   var filtered = getFiltered();
 
   if (filtered.length === 0) {
@@ -637,18 +514,19 @@ function render() {
   var html = '<div class="result-info">共 <span>' + filtered.length + '</span> 篇文献</div>';
 
   filtered.forEach(function(l) {
+    var catClass = getCategoryClass(l.category);
     html += '<div class="lit-card">' +
       '<div class="lit-body">' +
-        '<span class="lit-category">' + l.category + '</span>' +
-        '<div class="lit-title">' + highlight(l.title, searchQuery) + '</div>' +
+        '<span class="lit-category ' + catClass + '">' + l.category + '</span>' +
+        '<div class="lit-title"><a href="https://pubmed.ncbi.nlm.nih.gov/' + l.pmid + '/" target="_blank" rel="noopener">' + highlight(l.title, searchQuery) + '</a></div>' +
         '<div class="lit-meta">' +
           '<span class="authors">' + highlight(l.authors, searchQuery) + '</span> · ' +
           '<span class="journal">' + highlight(l.journal, searchQuery) + '</span>' +
-          '<span class="date">' + l.date + '</span>' +
+          '<span class="date"> · ' + l.date + '</span>' +
         '</div>' +
         '<div class="lit-summary">' + highlight(l.summary, searchQuery) + '</div>' +
         '<a href="https://pubmed.ncbi.nlm.nih.gov/' + l.pmid + '/" target="_blank" rel="noopener" class="lit-pmid">' +
-          '<span class="icon">🔗</span> PMID: ' + l.pmid +
+          '<span>🔗</span> PMID: ' + l.pmid +
         '</a>' +
       '</div>' +
     '</div>';
