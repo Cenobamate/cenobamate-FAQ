@@ -77,6 +77,23 @@
     border-radius: 20px;
     white-space: nowrap;
   }
+  .lit-entry {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: background 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .lit-entry:hover { background: rgba(255,255,255,0.35); }
 
   /* Search */
   .search-wrap {
@@ -990,6 +1007,7 @@
       <p>西诺氨酯 · 内部使用 · v9</p>
     </div>
     <div class="badge">61 FAQ</div>
+    <a href="literature.html" class="lit-entry">📚 文献速查</a>
   </div>
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
