@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-05",
+  "lastUpdated": "2026-11-02",
   "categories": [
     "真实世界研究",
     "临床试验",
@@ -890,6 +890,17 @@
       "category": "安全性与耐受性",
       "year": 2026,
       "summary": "回顾性研究评估24例儿童耐药性癫痫使用西诺氨酯的不良事件和风险因素。50%发作改善，50%出现生理性不良事件，16.7%出现精神不良事件。39%因不耐受停药（平均4个月）。精神不良事件与女性显著相关（p=0.04），75%出现精神不良事件者停药。提示青春期可能增加精神不良事件风险。"
+    },
+    {
+      "id": 81,
+      "pmid": "42956387",
+      "title": "Cenobamate in Focal-Onset Refractory and Super-Refractory Status Epilepticus: A Multicenter Cohort Study With Matched Analysis.",
+      "authors": "Campos-Fernandez D, Abraira L, Vila-Sala C, et al.",
+      "journal": "Neurology",
+      "date": "2026-10",
+      "category": "真实世界研究",
+      "year": 2026,
+      "summary": "多中心队列研究（n=31），评估西诺氨酯用于局灶性难治性及超难治性癫痫持续状态的疗效。总体SE终止率83.9%，匹配分析调整OR=5.9（95%CI 1.2–30，p=0.03），安全性良好，无严重不良事件。"
     }
   ]
 }
