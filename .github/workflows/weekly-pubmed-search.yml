@@ -54,7 +54,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout pending
+          cp pending-papers.json /tmp/pending-papers.json
+          git checkout -f pending
+          cp /tmp/pending-papers.json pending-papers.json
           git add pending-papers.json
           git commit -m "Add pending papers ($(TZ=Asia/Shanghai date '+%Y-%m-%d'))" || echo "No changes to commit"
           git push origin pending
