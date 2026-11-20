@@ -1,0 +1,37 @@
+{
+  "lastUpdated": "2026-11-20",
+  "categories": [
+    "真实世界研究",
+    "临床试验",
+    "安全性与耐受性",
+    "药物相互作用",
+    "特殊人群",
+    "机制研究",
+    "综述与Meta分析",
+    "其他"
+  ],
+  "literature": [
+    {
+      "id": 81,
+      "pmid": "43042732",
+      "title": "Real-world safety profiles of newer antiseizure medications: A pharmacovigilance study based on FDA Adverse Event Reporting System database.",
+      "authors": "He Z, et al.",
+      "journal": "Epileptic disorders : international epilepsy journal with videotape",
+      "date": "2026-11-17",
+      "category": "真实世界研究",
+      "year": 2026,
+      "summary": "安全性数据，儿童人群数据。"
+    },
+    {
+      "id": 82,
+      "pmid": "43037523",
+      "title": "Cenobamate in brain tumor-related epilepsy: A multicenter real-world experience.",
+      "authors": "Romozzi M, et al.",
+      "journal": "Epilepsia open",
+      "date": "2026-11-16",
+      "category": "真实世界研究",
+      "year": 2026,
+      "summary": "真实世界/回顾性研究。发作频率降低，≥50%应答率，无发作率。关键数据：35%, 20%, 15%。"
+    }
+  ]
+}
