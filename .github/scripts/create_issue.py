@@ -64,7 +64,7 @@ def main():
     lines.append("")
     lines.append("如需修改某篇文献的分类，请在回复中注明，例如：")
     lines.append("```")
-    lines.append(f"确认推送，但 PMID {papers[0]['pmid']} 改为"临床试验"")
+    lines.append(f"确认推送，但 PMID {papers[0]['pmid']} 改为「临床试验」")
     lines.append("```")
     lines.append("")
     lines.append("> ⏰ 本 Issue 将在确认后自动推送文献到 `literature-data.json` 并关闭。")
